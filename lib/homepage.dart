@@ -38,10 +38,10 @@ class _HomepageState extends State<Homepage> {
                     ),
                     Expanded(
                       child: Text("rate", style: TextStyle(fontSize: 12)),
-                      flex: 2,
+                      flex: 1,
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Text("total", style: TextStyle(fontSize: 12)),
                     ),
                   ],
@@ -57,10 +57,10 @@ class _HomepageState extends State<Homepage> {
                     ),
                     Expanded(
                       child: Text("50", style: TextStyle(fontSize: 12)),
-                      flex: 2,
+                      flex: 1,
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Text("50", style: TextStyle(fontSize: 12)),
                     ),
                   ],
@@ -78,10 +78,10 @@ class _HomepageState extends State<Homepage> {
                     ),
                     Expanded(
                       child: Text("200", style: TextStyle(fontSize: 12)),
-                      flex: 2,
+                      flex: 1,
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 1,
                       child: Text("200", style: TextStyle(fontSize: 12)),
                     ),
                   ],
@@ -90,7 +90,7 @@ class _HomepageState extends State<Homepage> {
                 Row(
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 5,
                       child: Text(
                         'Total :',
                         style: TextStyle(fontSize: 15),
@@ -107,6 +107,25 @@ class _HomepageState extends State<Homepage> {
         onInitialized: (controller) {
           this.controller = controller;
         },
+      ),
+
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ElevatedButton(
+          onPressed: () async {
+            final address = await FlutterBluetoothPrinter.selectDevice(context);
+            if (address != null) {
+              await controller?.print(
+                address: address.address,
+                keepConnected: true,
+                addFeeds: 4,
+              );
+            } else {
+              print("Failed Printing");
+            }
+          },
+          child: Text("Select Printer & Print"),
+        ),
       ),
     );
   }
